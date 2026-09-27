@@ -21,6 +21,18 @@ assert.deepStrictEqual(files, expected, "Game file list mismatch");
 
 const required = ["score", "round", "progress", "resultScore", "start", "restart"];
 const genericMarkers = ["اختر الأكبر", "اختر الزوجي", "تدريب سريع على التذكر"];
+const expectedGameMechanics = {
+  "memory-test.html": ["احفظ التسلسل", "function startGame", "correctCount"],
+  "reaction-test.html": ["performance.now", "انتظر الإشارة", "game:"reaction-test""],
+  "observation-test.html": ["أي رمز مختلف", "game:"observation-test""],
+  "focus-test.html": ["targetNumber", "game:"focus-test""],
+  "math-speed-test.html": ["game:"math-speed-test"", "×", "−"],
+  "patterns-test.html": ["اكتشف القاعدة", "game:"patterns-test""],
+  "guess-the-number.html": ["الرقم السري", "guessBtn", "game:"guess-the-number""],
+  "true-or-false.html": ["صح", "خطأ", "game:"true-or-false""],
+  "letter-order.html": ["رتّب", "game:"letter-order""],
+  "iq-challenge.html": ["أكملت الأسئلة العشرة", "game:"iq-challenge""]
+};
 const impossibleScorePatterns = [
   /score\s*\+=\s*1000/,
   /score\s*\+=\s*100/,
@@ -40,6 +52,10 @@ for (const name of files) {
     assert(!text.includes(marker), name + ": obsolete generic game content detected: " + marker);
   }
 
+  for (const marker of (expectedGameMechanics[name] || [])) {
+    assert(text.includes(marker), name + ": expected game mechanic marker missing: " + marker);
+  }
+
   for (const id of required) {
     assert(text.includes('id="' + id + '"'), name + ": missing #" + id);
   }
@@ -50,6 +66,7 @@ for (const name of files) {
     name + ": missing canonical");
   assert(!text.includes("score += 1000"), name + ": impossible score increment detected");
   assert(!text.includes("score += 100"), name + ": unbounded 100-point increment detected");
+  assert(!text.includes("resultScoreEl.textContent=score+"), name + ": result score must use a bounded value");
 
   const scripts = inlineScripts(text);
   assert(scripts.length > 0, name + ": no inline game JavaScript found");
@@ -75,6 +92,17 @@ for (const name of files) {
 }
 
 // Explicit score guardrails used by the current game families.
+function boundedScore(correct,total){
+  assert(Number.isInteger(correct));
+  assert(Number.isInteger(total) && total > 0);
+  return Math.max(0, Math.min(100, Math.round(correct / total * 100)));
+}
+for (let total of [3,5,6,8,10]) {
+  for (let correct = -2; correct <= total + 2; correct++) {
+    const score = boundedScore(correct,total);
+    assert(score >= 0 && score <= 100, `score out of range for ${correct}/${total}`);
+  }
+}
 for (let correct = 0; correct <= 6; correct++) {
   const score = Math.round(correct / 6 * 100);
   assert(Number.isInteger(score) && score >= 0 && score <= 100);
