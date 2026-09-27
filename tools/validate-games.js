@@ -34,6 +34,10 @@ for (const name of files) {
   assert(text.includes('canonical"'), name + ": missing canonical");
   assert(!badScoreMarker.test(text) || name === "iq-challenge.html",
     name + ": unbounded +10 score pattern detected");
+  const scripts = [...text.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi)].map(m => m[1]).filter(s => s.trim());
+  for (const script of scripts) {
+    try { new Function(script); } catch (err) { throw new Error(name + ": inline JavaScript syntax error: " + err.message); }
+  }
 }
 
 // Mathematical guardrails for the scoring model used by fixed-round games.
