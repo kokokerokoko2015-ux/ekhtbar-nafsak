@@ -11,6 +11,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Validate games
+        run: node tools/validate-games.js
       - name: Check JavaScript
         run: |
           set -e
