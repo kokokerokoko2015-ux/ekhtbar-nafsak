@@ -11,3 +11,10 @@
 .test-result{text-align:center;padding:10px 0}
 .test-result h2{font-size:3rem;margin:8px 0}
 .test-result strong{display:block;margin:12px 0}
+
+.answer-feedback{min-height:32px;text-align:center;font-weight:700;margin:12px 0}
+.correct-feedback{color:#15803d}
+.wrong-feedback{color:#b91c1c}
+.choice.correct{background:#dcfce7;border-color:#22c55e;color:#166534}
+.choice.wrong{background:#fee2e2;border-color:#ef4444;color:#991b1b}
+.choice:disabled{cursor:default;opacity:1}
