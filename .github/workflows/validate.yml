@@ -1,0 +1,32 @@
+name: Validate site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check JavaScript
+        run: |
+          set -e
+          for f in assets/js/*.js; do node --check "$f"; done
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,sys
+          root=Path('.')
+          missing=[]
+          for f in root.rglob('*.html'):
+              text=f.read_text(encoding='utf-8')
+              for link in re.findall(r'(?:href|src)="([^"]+)"', text):
+                  if link.startswith(('http','#','mailto:','javascript:')): continue
+                  p=(f.parent/link.split('#')[0]).resolve()
+                  if not p.exists(): missing.append((str(f),link))
+          if missing:
+              print(missing); sys.exit(1)
+          print('HTML internal links: OK')
+          PY
