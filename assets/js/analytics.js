@@ -1,0 +1,1 @@
+window.EKHTBAR_CONFIG={ga4Id:""};window.trackEvent=function(n,p){try{if(typeof gtag==="function")gtag("event",n,p||{})}catch(e){}};
