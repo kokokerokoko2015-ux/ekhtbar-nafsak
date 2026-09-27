@@ -1,1 +1,201 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>iq-challenge | اختبر نفسك</title><meta name="description" content="تحدٍ ترفيهي من 10 أسئلة"><meta name="robots" content="index,follow"><link rel="canonical" href="https://www.ekhtbarnafsak.com/games/iq-challenge.html"><link rel="stylesheet" href="../assets/css/style.css"></head><body><header class="site-header"><div class="container nav"><a class="brand" href="../index.html">اختبر نفسك</a><nav class="nav-links"><a href="../index.html">الرئيسية</a><a href="../daily-challenge.html">تحدي اليوم</a><a href="../about.html">من نحن</a></nav></div></header><main class="section"><div class="container game-wrap"><div class="game-head"><span class="badge">تحدي التفكير</span><h1>تحدي الذكاء</h1><p class="muted">تحدٍ ترفيهي من 10 أسئلة</p></div><div class="game-board"><div class="hud"><span>النقاط: <b id="score">0</b></span><span>الجولة: <b id="round">—</b></span></div><div class="progress"><i id="progress"></i></div><div id="question" class="question">اضغط ابدأ</div><div id="choices" class="choices"></div><div class="actions"><button id="start" class="btn btn-primary" onclick="start()">ابدأ اللعبة</button></div><div id="result" class="result"><strong>نتيجتك: <span id="resultScore"></span> نقطة</strong><p>هذه النتيجة تعكس أداءك داخل اللعبة فقط، وليست تقييمًا للذكاء أو الصحة النفسية.</p><button class="btn" onclick="location.reload()">إعادة اللعب</button></div></div><div class="ad">مساحة إعلانية</div><div class="prose"><h2>ملاحظة</h2><p>تحدٍ ترفيهي من 10 أسئلة. اللعبة للتدريب والترفيه وليست اختبارًا نفسيًا معياريًا.</p></div></div></main><script>var score=0,round=0;function start(){document.getElementById("start").style.display="none";launch();trackEvent("game_started",{game:"iq-challenge"})}function finish(){document.getElementById("resultScore").textContent=score;document.getElementById("result").classList.add("show");trackEvent("game_completed",{game:"iq-challenge",score:score})}var Q={"q":["أكمل: 3،6،12،24،؟","ساعة:وقت — ميزان:؟","من الأصغر؟ محمد أكبر من سارة وسارة أكبر من خالد.","2،3،5،7،11،؟","3 أقلام = 15 جنيهًا، 10 أقلام = ؟","الشكل المختلف: مربع، مستطيل، معيّن، مثلث","أكمل: 16،25،36،؟","أي عدد أولي؟","إذا كان اليوم الاثنين، بعد 10 أيام؟","مجموع عددين متتاليين 25، الأصغر؟"],"c":[["36","42","48","30"],["وزن","طعام","طبخ","ذهب"],["محمد","سارة","خالد","متساوون"],["12","13","14","15"],["40","45","50","60"],["مربع","مستطيل","معيّن","مثلث"],["42","49","48","64"],["12","13","15","21"],["الأربعاء","الخميس","الجمعة","السبت"],["11","12","13","10"]],"a":[2,0,2,1,2,3,1,1,1,1]};function launch(){if(round>=Q.q.length)return finish();question.textContent=Q.q[round];choices.innerHTML=Q.c[round].map(function(x,i){return '<button class="choice" onclick="answer('+i+')">'+x+'</button>'}).join("");progress.style.width=(round/Q.q.length*100)+"%"}function answer(i){if(i===Q.a[round])score+=10;round++;setTimeout(launch,100)}</script><footer class="footer"><div class="container"><a href="../privacy-policy.html">الخصوصية</a> · <a href="../terms.html">الشروط</a> · <a href="../contact.html">اتصل بنا</a></div></footer><script src="../assets/js/analytics.js"></script></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تحدي التفكير والمنطق — 10 أسئلة | اختبر نفسك</title>
+<meta name="description" content="تحدٍ ترفيهي من 10 أسئلة في المنطق والحساب والأنماط. النتيجة تقيس أداءك داخل اللعبة فقط.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.ekhtbarnafsak.com/games/iq-challenge.html">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+<div class="container nav">
+<a class="brand" href="../index.html">اختبر نفسك</a>
+<nav class="nav-links">
+<a href="../index.html">الرئيسية</a>
+<a href="../daily-challenge.html">تحدي اليوم</a>
+<a href="../about.html">من نحن</a>
+</nav>
+</div>
+</header>
+
+<main class="section">
+<div class="container game-wrap">
+<div class="game-head">
+<span class="badge">تحدي التفكير</span>
+<h1>تحدي الذكاء</h1>
+<p class="muted">تحدٍ ترفيهي من 10 أسئلة</p>
+</div>
+
+<div class="game-board">
+<div class="hud">
+<span>النقاط: <b id="score">0</b></span>
+<span>السؤال: <b id="round">—</b></span>
+</div>
+
+<div class="progress" aria-label="تقدم الاختبار"><i id="progress"></i></div>
+
+<div id="question" class="question" aria-live="polite">اضغط ابدأ</div>
+<div id="choices" class="choices"></div>
+
+<div id="feedback" class="answer-feedback" aria-live="polite"></div>
+
+<div class="actions">
+<button id="start" class="btn btn-primary" type="button">ابدأ اللعبة</button>
+</div>
+
+<div id="result" class="result">
+<strong>نتيجتك: <span id="resultScore">0</span> نقطة</strong>
+<p>هذه النتيجة تعكس أداءك داخل اللعبة فقط، وليست تقييمًا للذكاء أو الصحة النفسية.</p>
+<button id="restart" class="btn" type="button">إعادة اللعب</button>
+</div>
+</div>
+
+<div class="ad">مساحة إعلانية</div>
+
+<div class="prose">
+<h2>ملاحظة</h2>
+<p>تحدٍ ترفيهي من 10 أسئلة. اللعبة للتدريب والترفيه وليست اختبارًا نفسيًا معياريًا أو أداة تشخيص.</p>
+</div>
+</div>
+</main>
+
+<footer class="footer">
+<div class="container">
+<a href="../privacy-policy.html">الخصوصية</a> ·
+<a href="../terms.html">الشروط</a> ·
+<a href="../contact.html">اتصل بنا</a>
+</div>
+</footer>
+
+<script src="../assets/js/analytics.js"></script>
+<script>
+(function(){
+"use strict";
+
+var score=0;
+var round=0;
+var locked=false;
+
+var questionEl=document.getElementById("question");
+var choicesEl=document.getElementById("choices");
+var scoreEl=document.getElementById("score");
+var roundEl=document.getElementById("round");
+var progressEl=document.getElementById("progress");
+var feedbackEl=document.getElementById("feedback");
+var startBtn=document.getElementById("start");
+var resultEl=document.getElementById("result");
+var resultScoreEl=document.getElementById("resultScore");
+var restartBtn=document.getElementById("restart");
+
+var Q=[
+{q:"أكمل: 3، 6، 12، 24، ؟",c:["36","42","48","30"],a:2},
+{q:"ساعة : وقت — ميزان : ؟",c:["وزن","طعام","طبخ","ذهب"],a:0},
+{q:"محمد أكبر من سارة، وسارة أكبر من خالد. من الأصغر؟",c:["محمد","سارة","خالد","متساوون"],a:2},
+{q:"أكمل: 2، 3، 5، 7، 11، ؟",c:["12","13","14","15"],a:1},
+{q:"3 أقلام = 15 جنيهًا، 10 أقلام = ؟",c:["40","45","50","60"],a:2},
+{q:"أي شكل مختلف عن الباقي؟",c:["مربع","مستطيل","معيّن","مثلث"],a:3},
+{q:"أكمل: 16، 25، 36، ؟",c:["42","49","48","64"],a:1},
+{q:"أي عدد أولي؟",c:["12","13","15","21"],a:1},
+{q:"إذا كان اليوم الاثنين، فبعد 10 أيام يكون؟",c:["الأربعاء","الخميس","الجمعة","السبت"],a:1},
+{q:"مجموع عددين صحيحين متتاليين هو 25. ما العدد الأصغر؟",c:["11","12","13","10"],a:1}
+];
+
+function setProgress(){
+progressEl.style.width=((round/Q.length)*100)+"%";
+}
+
+function renderQuestion(){
+locked=false;
+feedbackEl.textContent="";
+feedbackEl.className="answer-feedback";
+
+if(round>=Q.length){
+finish();
+return;
+}
+
+var item=Q[round];
+roundEl.textContent=(round+1)+" / "+Q.length;
+questionEl.textContent=item.q;
+choicesEl.innerHTML="";
+
+item.c.forEach(function(choice,index){
+var button=document.createElement("button");
+button.type="button";
+button.className="choice";
+button.textContent=choice;
+button.addEventListener("click",function(){
+answer(index);
+});
+choicesEl.appendChild(button);
+});
+
+setProgress();
+}
+
+function answer(index){
+if(locked)return;
+locked=true;
+
+var item=Q[round];
+var buttons=choicesEl.querySelectorAll(".choice");
+
+buttons.forEach(function(button){button.disabled=true;});
+
+if(index===item.a){
+score+=10;
+buttons[index].classList.add("correct");
+feedbackEl.textContent="إجابة صحيحة";
+feedbackEl.className="answer-feedback correct-feedback";
+}else{
+buttons[index].classList.add("wrong");
+buttons[item.a].classList.add("correct");
+feedbackEl.textContent="الإجابة الصحيحة: "+item.c[item.a];
+feedbackEl.className="answer-feedback wrong-feedback";
+}
+
+scoreEl.textContent=score;
+
+setTimeout(function(){
+round++;
+renderQuestion();
+},700);
+}
+
+function start(){
+score=0;
+round=0;
+locked=false;
+scoreEl.textContent="0";
+resultEl.classList.remove("show");
+startBtn.style.display="none";
+trackEvent("game_started",{game:"iq-challenge"});
+renderQuestion();
+}
+
+function finish(){
+roundEl.textContent=Q.length+" / "+Q.length;
+progressEl.style.width="100%";
+choicesEl.innerHTML="";
+questionEl.textContent="اكتملت الأسئلة العشرة";
+feedbackEl.textContent="";
+resultScoreEl.textContent=score;
+resultEl.classList.add("show");
+trackEvent("game_completed",{game:"iq-challenge",score:score});
+}
+
+function restart(){
+resultEl.classList.remove("show");
+startBtn.style.display="";
+start();
+}
+
+startBtn.addEventListener("click",start);
+restartBtn.addEventListener("click",restart);
+})();
+</script>
+</body>
+</html>
