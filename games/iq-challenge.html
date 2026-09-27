@@ -48,6 +48,8 @@
 
 <div id="result" class="result">
 <strong>نتيجتك: <span id="resultScore">0</span> نقطة</strong>
+<p id="resultSummary">0 من 10 إجابات صحيحة</p>
+<div id="resultDetails" class="result-details" aria-live="polite"></div>
 <p>هذه النتيجة تعكس أداءك داخل اللعبة فقط، وليست تقييمًا للذكاء أو الصحة النفسية.</p>
 <button id="restart" class="btn" type="button">إعادة اللعب</button>
 </div>
@@ -77,7 +79,9 @@
 
 var score=0;
 var round=0;
+var correctCount=0;
 var locked=false;
+var answers=[];
 
 var questionEl=document.getElementById("question");
 var choicesEl=document.getElementById("choices");
@@ -88,6 +92,8 @@ var feedbackEl=document.getElementById("feedback");
 var startBtn=document.getElementById("start");
 var resultEl=document.getElementById("result");
 var resultScoreEl=document.getElementById("resultScore");
+var resultSummaryEl=document.getElementById("resultSummary");
+var resultDetailsEl=document.getElementById("resultDetails");
 var restartBtn=document.getElementById("restart");
 
 var Q=[
@@ -145,8 +151,11 @@ var buttons=choicesEl.querySelectorAll(".choice");
 
 buttons.forEach(function(button){button.disabled=true;});
 
+answers.push({question:item.q,selected:item.c[index],correct:item.c[item.a],isCorrect:index===item.a});
+
 if(index===item.a){
 score+=10;
+correctCount++;
 buttons[index].classList.add("correct");
 feedbackEl.textContent="إجابة صحيحة";
 feedbackEl.className="answer-feedback correct-feedback";
@@ -168,6 +177,8 @@ renderQuestion();
 function start(){
 score=0;
 round=0;
+correctCount=0;
+answers=[];
 locked=false;
 scoreEl.textContent="0";
 resultEl.classList.remove("show");
@@ -183,6 +194,12 @@ choicesEl.innerHTML="";
 questionEl.textContent="اكتملت الأسئلة العشرة";
 feedbackEl.textContent="";
 resultScoreEl.textContent=score;
+resultSummaryEl.textContent=correctCount+" من "+Q.length+" إجابات صحيحة — "+(Q.length-correctCount)+" إجابات غير صحيحة";
+resultDetailsEl.innerHTML=answers.map(function(item,index){
+var cls=item.isCorrect?"result-correct":"result-wrong";
+var label=item.isCorrect?"✓ صحيحة":"✗ غير صحيحة";
+return "<div class=\"result-item "+cls+"\"><strong>"+(index+1)+". "+label+"</strong><span>"+item.question+"</span><small>إجابتك: "+item.selected+(item.isCorrect?"":" — الصحيح: "+item.correct)+"</small></div>";
+}).join("");
 resultEl.classList.add("show");
 trackEvent("game_completed",{game:"iq-challenge",score:score});
 }
