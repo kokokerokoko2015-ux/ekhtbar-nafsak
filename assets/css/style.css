@@ -18,3 +18,10 @@
 .choice.correct{background:#dcfce7;border-color:#22c55e;color:#166534}
 .choice.wrong{background:#fee2e2;border-color:#ef4444;color:#991b1b}
 .choice:disabled{cursor:default;opacity:1}
+
+.result-details{display:grid;gap:8px;margin:16px 0;text-align:right}
+.result-item{padding:10px 12px;border:1px solid #dbe2ec;border-radius:10px;background:#fff}
+.result-item span,.result-item small{display:block;margin-top:4px}
+.result-item small{color:#475569}
+.result-correct{border-color:#86efac;background:#f0fdf4}
+.result-wrong{border-color:#fca5a5;background:#fff1f2}
