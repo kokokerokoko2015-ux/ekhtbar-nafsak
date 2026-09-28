@@ -23,15 +23,15 @@ const required = ["score", "round", "progress", "resultScore", "start", "restart
 const genericMarkers = ["اختر الأكبر", "اختر الزوجي", "تدريب سريع على التذكر"];
 const expectedGameMechanics = {
   "memory-test.html": ["احفظ التسلسل", "function startGame", "correctCount"],
-  "reaction-test.html": ["performance.now", "انتظر الإشارة", "game:"reaction-test""],
-  "observation-test.html": ["أي رمز مختلف", "game:"observation-test""],
-  "focus-test.html": ["targetNumber", "game:"focus-test""],
-  "math-speed-test.html": ["game:"math-speed-test"", "×", "−"],
-  "patterns-test.html": ["اكتشف القاعدة", "game:"patterns-test""],
-  "guess-the-number.html": ["الرقم السري", "guessBtn", "game:"guess-the-number""],
-  "true-or-false.html": ["صح", "خطأ", "game:"true-or-false""],
-  "letter-order.html": ["رتّب", "game:"letter-order""],
-  "iq-challenge.html": ["أكملت الأسئلة العشرة", "game:"iq-challenge""]
+  "reaction-test.html": ["performance.now", "انتظر الإشارة", 'game:"reaction-test"'],
+  "observation-test.html": ["أي رمز مختلف", 'game:"observation-test"'],
+  "focus-test.html": ["targetNumber", 'game:"focus-test"'],
+  "math-speed-test.html": ['game:"math-speed-test"', "×", "−"],
+  "patterns-test.html": ["اكتشف القاعدة", 'game:"patterns-test"'],
+  "guess-the-number.html": ["الرقم السري", "guessBtn", 'game:"guess-the-number"'],
+  "true-or-false.html": ["صح", "خطأ", 'game:"true-or-false"'],
+  "letter-order.html": ["رتّب", 'game:"letter-order"'],
+  "iq-challenge.html": ["أكملت الأسئلة العشرة", 'game:"iq-challenge"']
 };
 const impossibleScorePatterns = [
   /score\s*\+=\s*1000/,
